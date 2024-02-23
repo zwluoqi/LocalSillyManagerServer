@@ -23,19 +23,20 @@ def create_app(*args, **kwargs):
   # 设置日志的记录等级
   app.logger.setLevel(logging.DEBUG)
 
-  @app.route("/")
-  def root():
-    return jsonify(message="LocalSillyManagerServer")
-  
-  @app.route("/handle_502",
-             methods=['GET'])
-  def handle_502():
-    # 执行shell命令
-    port = request.args.get('port')
-        # 使用获取到的参数
-    print(f"Restarting on port {port}")
+  def handle_502(port):
     subprocess.run(["/root/silly/start_silly_port.sh",port], check=True)
-    return "Script executed"
+    print( "Script executed" )
+    return
+  
+  @app.route("/",
+             methods=['GET'])
+  def root():
+    service_name = request.headers.get('X-Service-Name')
+    if service_name =='handle_502':
+        port = request.headers.get('X-Service-Port')
+        print(f"Restarting {service_name} on port {port}")
+        handle_502(port)
+    return "正在重启服务，稍后刷新即可"
   
   return app
 
