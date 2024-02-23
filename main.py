@@ -5,9 +5,8 @@ import threading
 import queue
 import logging
 import subprocess
+import random
 
-
-ThreadCreaded = False
 
 def dump_session():
     try:
@@ -19,7 +18,7 @@ def dump_session():
 async def worker_once():
   while True:
     dump_session()
-    await asyncio.sleep(60)
+    await asyncio.sleep(random.randint(60,120))
 
 class CustomError(Exception):
   """自定义异常类，携带错误码和错误消息"""
@@ -32,10 +31,7 @@ class CustomError(Exception):
 
 # Refactor the creation of the Flask app into a function
 def create_app(*args, **kwargs):
-  global ThreadCreaded
-  if not ThreadCreaded:
-    ThreadCreaded = True
-    threading.Thread(target=lambda: asyncio.run(worker_once())).start()
+  threading.Thread(target=lambda: asyncio.run(worker_once())).start()
 
   app = Flask(__name__)
   # 设置日志的记录等级
