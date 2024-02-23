@@ -17,6 +17,7 @@ def dump_session():
 
 async def worker_once():
   while True:
+    await asyncio.sleep(random.randint(1,60))
     dump_session()
     await asyncio.sleep(random.randint(60,120))
 
