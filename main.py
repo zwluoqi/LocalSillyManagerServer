@@ -24,9 +24,11 @@ def create_app(*args, **kwargs):
   app.logger.setLevel(logging.DEBUG)
 
   def handle_502(port):
-    subprocess.run(["/root/silly/start_silly_port.sh",port], check=True)
+    try:
+        subprocess.run(["/root/silly/start_silly_port.sh",port], check=True)
+    except Exception as e:
+        print( e )
     print( "Script executed" )
-    return
   
   @app.route("/",
              methods=['GET'])
@@ -36,7 +38,7 @@ def create_app(*args, **kwargs):
         port = request.headers.get('X-Service-Port')
         print(f"Restarting {service_name} on port {port}")
         handle_502(port)
-    return jsonify(message="正在重启服务，稍后刷新即可")
+    return "正在重启服务，稍后刷新即可"
   
   return app
 
