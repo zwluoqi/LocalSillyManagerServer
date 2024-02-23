@@ -7,6 +7,18 @@ import logging
 import subprocess
 
 
+def dump_session():
+    try:
+        subprocess.run(["/root/silly/dumpSession.sh"], check=True)
+    except Exception as e:
+        print( e )
+    print( "dump_session executed" )
+
+async def worker_once():
+  while True:
+    dump_session()
+    await asyncio.sleep(60)
+    
 class CustomError(Exception):
   """自定义异常类，携带错误码和错误消息"""
 
@@ -18,6 +30,7 @@ class CustomError(Exception):
 
 # Refactor the creation of the Flask app into a function
 def create_app(*args, **kwargs):
+  threading.Thread(target=lambda: asyncio.run(worker_once())).start()
 
   app = Flask(__name__)
   # 设置日志的记录等级
@@ -42,24 +55,11 @@ def create_app(*args, **kwargs):
   
   return app
 
-def dump_session():
-    try:
-        subprocess.run(["/root/silly/dumpSession.sh"], check=True)
-    except Exception as e:
-        print( e )
-    print( "dump_session executed" )
 
-async def worker_once():
-  while True:
-    dump_session()
-    await asyncio.sleep(60)
 
 
 # Only for local development, not for production
 if __name__ == "__main__":
-
-  threading.Thread(target=lambda: asyncio.run(worker_once())).start()
-
   app = create_app(None, None)
   app.run(host="0.0.0.0", port=5000)
 
