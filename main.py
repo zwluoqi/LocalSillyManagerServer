@@ -42,9 +42,24 @@ def create_app(*args, **kwargs):
   
   return app
 
+def dump_session():
+    try:
+        subprocess.run(["/root/silly/dumpSession.sh"], check=True)
+    except Exception as e:
+        print( e )
+    print( "dump_session executed" )
+
+async def worker_once():
+  while True:
+    dump_session()
+    await asyncio.sleep(60)
+
 
 # Only for local development, not for production
 if __name__ == "__main__":
+
+  threading.Thread(target=lambda: asyncio.run(worker_once())).start()
+
   app = create_app(None, None)
   app.run(host="0.0.0.0", port=5000)
 
