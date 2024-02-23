@@ -34,8 +34,8 @@ class CustomError(Exception):
 def create_app(*args, **kwargs):
   global ThreadCreaded
   if not ThreadCreaded:
-    threading.Thread(target=lambda: asyncio.run(worker_once())).start()
     ThreadCreaded = True
+    threading.Thread(target=lambda: asyncio.run(worker_once())).start()
 
   app = Flask(__name__)
   # 设置日志的记录等级
