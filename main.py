@@ -36,7 +36,7 @@ def create_app(*args, **kwargs):
         port = request.headers.get('X-Service-Port')
         print(f"Restarting {service_name} on port {port}")
         handle_502(port)
-    return "正在重启服务，稍后刷新即可"
+    return jsonify(message="正在重启服务，稍后刷新即可")
   
   return app
 
