@@ -25,7 +25,7 @@ def create_app(*args, **kwargs):
 
   @app.route("/")
   def root():
-    return jsonify(message="Claude2WebProxy")
+    return jsonify(message="LocalSillyManagerServer")
   
   @app.route("/script_trigger_url/<port>",
              methods=['GET'])
