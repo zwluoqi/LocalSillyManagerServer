@@ -1,0 +1,4 @@
+*.pyc
+./.pythonlibs
+.pythonlibs
+__pycache__
