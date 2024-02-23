@@ -27,10 +27,13 @@ def create_app(*args, **kwargs):
   def root():
     return jsonify(message="LocalSillyManagerServer")
   
-  @app.route("/script_trigger_url/<port>",
+  @app.route("/handle_502",
              methods=['GET'])
-  def script_trigger_url(port):
+  def handle_502():
     # 执行shell命令
+    port = request.args.get('port')
+        # 使用获取到的参数
+    print(f"Restarting on port {port}")
     subprocess.run(["/root/silly/start_silly_port.sh",port], check=True)
     return "Script executed"
   
