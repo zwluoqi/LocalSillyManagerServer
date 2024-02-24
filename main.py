@@ -73,7 +73,7 @@ def create_app(*args, **kwargs):
           }
           baseurl = 'https://sillydbserver.qingzhu-us.workers.dev'
           response = requests.post(baseurl+'/checksilly',data=payload,headers=headers)
-          print(response.text)
+          print('python',response.text)
           valid = response.json()['valid']
           if True:
             handle_502(port)
