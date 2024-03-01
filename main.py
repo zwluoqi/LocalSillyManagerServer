@@ -60,28 +60,29 @@ def create_app(*args, **kwargs):
              methods=['GET'])
   def root():
     service_name = request.headers.get('X-Service-Name')
-    if service_name =='handle_502':
-        port = request.headers.get('X-Service-Port')
-        print(f"Restarting {service_name} on port {port}")
-        try:
-          payload = {
-            "ip":ip_address,
-            "port":port,
-          }
-          headers = {
-              'Content-Type': 'application/json',
-          }
-          baseurl = 'https://sillydbserver.qingzhu-us.workers.dev'
-          response = requests.post(baseurl+'/checksilly',data=payload,headers=headers)
-          print('python',response.text)
-          valid = response.json()['valid']
-          if True:
-            handle_502(port)
-          else:
-            return "服务已到期，请续费后使用"
-        except Exception as e:
-            print( e )
-            handle_502(port)
+    print('service_name',service_name)
+    # if service_name =='handle_502':
+    port = request.headers.get('X-Service-Port')
+    print(f"Restarting {service_name} on port {port}")
+    try:
+      payload = {
+        "ip":ip_address,
+        "port":port,
+      }
+      headers = {
+          'Content-Type': 'application/json',
+      }
+      baseurl = 'https://sillydbserver.qingzhu-us.workers.dev'
+      response = requests.post(baseurl+'/checksilly',data=payload,headers=headers)
+      print('python',response.text)
+      valid = response.json()['valid']
+      if True:
+        handle_502(port)
+      else:
+        return "服务已到期，请续费后使用"
+    except Exception as e:
+        print( e )
+        handle_502(port)
     return "正在重启服务，稍后刷新即可"
     #   # HTML 模板，包含 JavaScript 倒计时
     # html_template = '''
