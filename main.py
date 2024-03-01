@@ -103,7 +103,7 @@ def create_app(*args, **kwargs):
         </script>
     </head>
     <body>
-        <p>Please wait while we process your request. The page will refresh in <span id="countdown">20</span> seconds.</p>
+        <p>正在重启云酒馆. 启动倒计时： <span id="countdown">20</span> seconds.</p>
     </body>
     </html>
     '''
