@@ -1,4 +1,4 @@
-from flask import Flask, request, jsonify, make_response, Response, stream_with_context,render_template_string
+from flask import Flask, request, jsonify, make_response, Response, stream_with_context
 import asyncio
 import time
 import threading
@@ -82,8 +82,8 @@ def create_app(*args, **kwargs):
         except Exception as e:
             print( e )
             handle_502(port)
-
-    # HTML 模板，包含 JavaScript 倒计时
+    return "正在重启服务，稍后刷新即可"
+      # HTML 模板，包含 JavaScript 倒计时
     html_template = '''
     <!DOCTYPE html>
     <html>
@@ -108,7 +108,6 @@ def create_app(*args, **kwargs):
     </html>
     '''
     return render_template_string(html_template)
-  
   return app
 
 
