@@ -83,31 +83,31 @@ def create_app(*args, **kwargs):
             print( e )
             handle_502(port)
     return "正在重启服务，稍后刷新即可"
-      # HTML 模板，包含 JavaScript 倒计时
-    html_template = '''
-    <!DOCTYPE html>
-    <html>
-    <head>
-        <title>Processing...</title>
-        <script type="text/javascript">
-            var countdown = 20;
-            var countdownTimer = setInterval(function() {
-                if (countdown <= 0) {
-                    clearInterval(countdownTimer);
-                    window.location.reload();
-                } else {
-                    document.getElementById('countdown').innerHTML = countdown;
-                    countdown--;
-                }
-            }, 1000);
-        </script>
-    </head>
-    <body>
-        <p>Please wait while we process your request. The page will refresh in <span id="countdown">20</span> seconds.</p>
-    </body>
-    </html>
-    '''
-    return render_template_string(html_template)
+    #   # HTML 模板，包含 JavaScript 倒计时
+    # html_template = '''
+    # <!DOCTYPE html>
+    # <html>
+    # <head>
+    #     <title>Processing...</title>
+    #     <script type="text/javascript">
+    #         var countdown = 20;
+    #         var countdownTimer = setInterval(function() {
+    #             if (countdown <= 0) {
+    #                 clearInterval(countdownTimer);
+    #                 window.location.reload();
+    #             } else {
+    #                 document.getElementById('countdown').innerHTML = countdown;
+    #                 countdown--;
+    #             }
+    #         }, 1000);
+    #     </script>
+    # </head>
+    # <body>
+    #     <p>Please wait while we process your request. The page will refresh in <span id="countdown">20</span> seconds.</p>
+    # </body>
+    # </html>
+    # '''
+    # return render_template_string(html_template)
   return app
 
 
